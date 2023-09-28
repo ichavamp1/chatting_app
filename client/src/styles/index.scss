@@ -1,3 +1,40 @@
+@import url("https://fonts.google.com/specimen/Martian+Mono");
+
+$page_background_color: rgb(25, 25, 25);
+$white_text: rgb(210, 210, 210);
+$black_text: rgb(5, 5, 5);
+$font_text: 'Martian Mono', monospace;
+
+@mixin header_text($level: 1){
+    @if $level == 1{
+        font-size: 28px;
+    }
+}
+
 body{
-    background-color: rgb(15, 15, 15);
+    background-color: $page_background_color;
+    box-sizing: border-box;
+    height: 100vh;
+    margin: 0;
+    width: 100vh;
+}
+
+.header_text{
+    @include header_text(1);
+}
+
+.page_container{
+    align-items: center;
+    display: flex;
+    font-family: $font_text;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw;
+}
+
+#login_page_container{
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    height: 500px;
+    width: 500px;
 }
