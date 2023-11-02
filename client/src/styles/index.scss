@@ -1,29 +1,25 @@
 @import url("https://fonts.google.com/specimen/Martian+Mono");
 
-$page_background_color: rgb(25, 25, 25);
-$white_text: rgb(210, 210, 210);
-$black_text: rgb(5, 5, 5);
 $font_text: 'Martian Mono', monospace;
 
-@mixin header_text($level: 1){
+@mixin header-text($level: 1){
     @if $level == 1{
         font-size: 28px;
     }
 }
 
 body{
-    background-color: $page_background_color;
     box-sizing: border-box;
     height: 100vh;
     margin: 0;
     width: 100vh;
 }
 
-.header_text{
+.header-text{
     @include header_text(1);
 }
 
-.page_container{
+.page-container{
     align-items: center;
     display: flex;
     font-family: $font_text;
@@ -32,9 +28,49 @@ body{
     width: 100vw;
 }
 
-#login_page_container{
-    background-color: rgb(255, 255, 255);
+.text-field, .password-field{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    
+    input{
+        font-family: $font_text;
+        height: 20px;
+        padding: 0 4px;
+    }
+}
+
+.password-field{
+    position: relative;
+    input{
+        padding: 0 24px 0 4px;
+    }
+    .eye-icon{
+        position: absolute;
+        right: 5px;
+        top: 23px;
+    }
+}
+
+#login-page-container{
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 0.8px solid black;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
     height: 500px;
+    justify-content: center;
+    position: relative;
     width: 500px;
+
+    .header-text{
+        position: absolute;
+        top: 80px;
+    }
+
+    .text-field, .password-field{
+        width: 380px;
+    }
 }
