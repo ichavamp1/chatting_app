@@ -60,14 +60,14 @@ body{
     display: flex;
     flex-direction: column;
     gap: 18px;
-    height: 500px;
+    height: 350px;
     justify-content: center;
     position: relative;
     width: 500px;
 
     .header-text{
         position: absolute;
-        top: 80px;
+        top: 50px;
     }
 
     .text-field, .password-field{

@@ -5,7 +5,7 @@ export default function Login(){
     return (
         <div className="page-container">
             <div id="login-page-container">
-                <span className="header-text">LOGIN</span>
+                <span className="header-text">AUTHENTICATE</span>
                 <TextField label="Username"/>
                 <PasswordField label="Password"/>
             </div>
