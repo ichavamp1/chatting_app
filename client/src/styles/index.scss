@@ -28,29 +28,6 @@ body{
     width: 100vw;
 }
 
-.text-field, .password-field{
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    
-    input{
-        font-family: $font_text;
-        height: 20px;
-        padding: 0 4px;
-    }
-}
-
-.password-field{
-    position: relative;
-    input{
-        padding: 0 24px 0 4px;
-    }
-    .eye-icon{
-        position: absolute;
-        right: 5px;
-        top: 23px;
-    }
-}
 
 #login-page-container{
     align-items: center;
@@ -59,18 +36,52 @@ body{
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+    font-family: $font_text;
     gap: 18px;
     height: 350px;
     justify-content: center;
     position: relative;
     width: 500px;
-
+    
     .header-text{
         position: absolute;
         top: 50px;
     }
 
     .text-field, .password-field{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        
+        input{
+            font-family: $font_text;
+            height: 20px;
+            padding: 0 4px;
+        }
+    }
+    
+    .password-field{
+        position: relative;
+        input{
+            padding: 0 24px 0 4px;
+        }
+        .eye-icon{
+            position: absolute;
+            right: 5px;
+            top: 23px;
+        }
+    }
+    
+    .auth-button{
+        background-color: rgb(255, 255, 255);
+        border: 0.3px solid black;
+        border-radius: 2px;
+        font-family: $font_text;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .text-field, .password-field, .auth-button{
         width: 380px;
     }
 }
