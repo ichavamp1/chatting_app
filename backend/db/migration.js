@@ -1,18 +1,18 @@
 const QUERY = `
-CREATE TABLE Users(
+CREATE TABLE users(
 	id int PRIMARY KEY AUTO_INCREMENT,
     username varchar(100) NOT NULL,
     password varchar(255) NOT NULL
 );
 
-CREATE TABLE Messages(
+CREATE TABLE messages(
 	id int PRIMARY KEY AUTO_INCREMENT,
     content varchar(255),
     user_id int,
     FOREIGN KEY(user_id) REFERENCES Users(id)
 );
 
-CREATE TABLE Rooms(
+CREATE TABLE rooms(
 	id int PRIMARY KEY AUTO_INCREMENT,
     code varchar(100) NOT NULL,
     password varchar(255) NULL,
