@@ -4,7 +4,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 function TextField({label}){
     return (
         <div className="text-field">
-            <label>{label}</label>
+            <label className="input-label">{label}</label>
             <input />
         </div>
     );
@@ -15,12 +15,12 @@ function PasswordField({label}){
     
     return (
         <div className="password-field">
-            <label>{label}</label>
+            <label className="input-label">{label}</label>
             <input type={isTextVisible ? "text" : "password"}/>
             {isTextVisible ? 
-            <AiFillEye className="eye-icon" onClick={() => setIsTextVisible(false)}/>
+            <AiFillEye className="eye-icon" size="18px" onClick={() => setIsTextVisible(false)}/>
             :
-            <AiFillEyeInvisible className="eye-icon" onClick={() => setIsTextVisible(true)}/>
+            <AiFillEyeInvisible className="eye-icon" size="18px" onClick={() => setIsTextVisible(true)}/>
             }
         </div>
     );
