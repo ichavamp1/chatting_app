@@ -66,6 +66,10 @@ body{
         @include header-text(4);
     }
 
+    input:focus{
+        outline: none;
+    }
+
     .text-field, .password-field{
         box-sizing: border-box;
         display: flex;
@@ -96,6 +100,12 @@ body{
         font-family: $font_text;
         font-size: 16px;
         outline: none;
+    }
+    .auth-button:hover, input:hover{
+        background-color: rgb(235, 235, 235);
+    }
+    .auth-button:active{
+        background-color: rgb(200, 200, 200);
     }
     .auth-button, input{
         height: 34px;
