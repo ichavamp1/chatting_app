@@ -115,3 +115,33 @@ body{
         width: 500px;
     }
 }
+
+#main-page-container{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100vh;
+    padding: 8px;
+    width: 100vw;
+
+    #topbar{
+        border: 1px solid black;
+        height: 5%;
+    }
+
+    #main-container{
+        display: flex;
+        gap: 12px;
+        height: 95%;
+
+        #sidebar{
+            border: 1px solid green;
+            width: 15%;
+        }
+        #messages{
+            border: 1px solid blue;
+            width: 85%;
+        }
+    }
+}
