@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express"); const app = express();
 const mysql = require("mysql");
 
-const AuthRouter = require("./routes/authRoute");
+const {AuthRouter} = require("./routes/authRoute");
 
 const conn = require("./db/connectionConstant");
 const userController = require("./db/controllers/userController");
