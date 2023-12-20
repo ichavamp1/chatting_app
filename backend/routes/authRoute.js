@@ -5,6 +5,7 @@ const conn = require("../db/connectionConstant");
 
 const AuthRouter = express.Router();
 const userController = require("../db/controllers/userController");
+const invalid_tokensController = require("../db/controllers/invalid_tokenController");
 
 if (conn.state === "disconnected") conn.connect(error => {
     if (error) throw error;
@@ -36,10 +37,13 @@ AuthRouter.post("/login", async (req, res) => {
     return res.status(200).json({accessToken: accessToken, userId: targetUser.id, username: targetUser.username});
 });
 
-function authenticateToken(req, res, next){
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+async function authenticateToken(req, res, next){
+    const token = req.headers["authorization"] ?? req.headers["authorization"].split(" ")[1];
+
     if (token == null) return res.status(400).json({message: "No token provided"});
+
+    const isTokenInvalid = (await invalid_tokensController.select(conn, "*", null, `WHERE value = '${token}'`))[0] != null;
+    if (isTokenInvalid) return res.status(401).json({message: "Token is expired"});
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, payload) => {
         if (error) return res.status(500);
