@@ -1,5 +1,7 @@
 import { Suspense, useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../userSlice";
 
 function TextField({label}){
     return (
@@ -28,6 +30,8 @@ function PasswordField({label}){
 
 export default function Login(){
     const [isAuth, setIsAuth] = useState(false);
+    const dispatch = useDispatch();
+    useSelector(state => console.log(state));
 
     return (
         <div className="page-container">
@@ -36,7 +40,7 @@ export default function Login(){
                 <TextField label="Username"/>
                 <PasswordField label="Password"/>
                 <Suspense>
-                    <button className="auth-button">Sign In</button> {/*NOTE TO SELF: ADD ACTIVE/INACTIVE color to button once they have been come up with*/}
+                    <button className="auth-button" onClick={() => dispatch(setUser({userId: 1, username: "admin", authToken: "test"}))}>Sign In</button> {/*NOTE TO SELF: ADD ACTIVE/INACTIVE color to button once they have been come up with*/}
                 </Suspense>
             </div>
         </div>
