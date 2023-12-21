@@ -9,7 +9,7 @@ import "./styles/index.scss";
 
 import AuthenticatedRoute from './AuthenticatedRoute';
 import Login from './features/components/Login';
-import MainPage from './features/components/MainPage/MainPage';
+import MainPage from './features/components/MainPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

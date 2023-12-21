@@ -15,4 +15,4 @@ app.get("/", (req, res) => {
     userController.query(conn).then(data => res.json(data));
 });
 
-app.listen(3000, () => console.log("Server is on"));
+app.listen(3001, () => console.log("Server is on"));

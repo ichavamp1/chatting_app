@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 function TopBar(){
     return (
         <div id="topbar"></div>
@@ -17,6 +19,7 @@ function MessagesContainer(){
 }
 
 export default function MainPage(){
+    useSelector(state => console.log(state));
     return (
         <div id="main-page-container">
             <TopBar />
