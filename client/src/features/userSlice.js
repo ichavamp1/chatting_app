@@ -14,6 +14,7 @@ export const userSlice = createSlice({
             state.userId = action.payload.userId;
             state.username = action.payload.username;
             state.authToken = action.payload.authToken;
+            localStorage.setItem("authToken", action.payload.authToken);
         }
     }
 });

@@ -32,9 +32,22 @@ AuthRouter.post("/login", async (req, res) => {
 
     if ((await bcrypt.compare(password, targetUser.password)) == false) return res.status(401).json({message: "Incorrect password"});
 
-    const accessToken = jwt.sign({userId: targetUser.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "6h"});
+    const accessToken = jwt.sign({userId: targetUser.id, username: targetUser.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "6h"});
 
     return res.status(200).json({accessToken: accessToken, userId: targetUser.id, username: targetUser.username});
+});
+
+AuthRouter.post("/is_token_valid", async (req, res) => {
+    // const { authToken } = req.body;
+    // if (authToken == null) return res.status(400).json({message: "No token provided"});
+
+    // const isTokenInvalid = (await invalid_tokensController.select(conn, "*", null, `WHERE value = '${authToken}'`))[0] != null;
+    // if (isTokenInvalid) return res.status(401).json(false);
+
+    jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MDMzNDk0MDgsImV4cCI6MTcwMzM3MTAwOH0.MhgwEoKFDmXiwAPcRPKqXltMAMUUGK14E1rGW9c60po", process.env.ACCESS_TOKEN_SECRET, (error, payload) => {
+        if (error) return res.status(500).json({message: error.message});
+        return res.status(200).json(payload);
+    });
 });
 
 async function authenticateToken(req, res, next){

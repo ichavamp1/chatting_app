@@ -1,9 +1,9 @@
-import { Suspense, useRef, useState, forwardRef } from "react";
+import { Suspense, useRef, useState, forwardRef, useEffect } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../userSlice";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { baseApi } from "../../api";
 
 const TextField = forwardRef(function({label}, ref){
     return (
@@ -32,12 +32,21 @@ const PasswordField = forwardRef(function({label}, ref){
 
 export default function Login(){
     const username = useRef(""); const password = useRef("");
+    const userState = useSelector(state => state.user);
     const dispatch = useDispatch();
     const nav = useNavigate();
-    useSelector(state => console.log(state));
+
+    useEffect(() => {
+        if (userState.authToken == null) return;
+
+        baseApi.post(`/api/auth/is_token_valid`, {authToken: "userState.authToken"}).then(res => {
+            dispatch(setUser({userId: res.data.userId, username: res.data.username, authToken: userState.authToken}));
+            nav("/");
+        }).catch(error => console.log(error));
+    }, []);
 
     const onLogIn = () => {
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, {
+        baseApi.post("/api/auth/login", {
             username: username.current.value,
             password: password.current.value
         }).then(res => {
