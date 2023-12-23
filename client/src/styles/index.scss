@@ -1,7 +1,15 @@
 @import url("https://fonts.google.com/specimen/Martian+Mono");
 
 $font_text: 'Martian Mono', monospace;
-$container_bg_color: rgba(0, 0, 0, 0.05);
+$container_bg_color: rgba(0, 0, 0, 0.03);
+$input_hover_bg: rgba(0, 0, 0, 0.2);
+
+.text-red{
+    color: rgb(240, 0, 0);
+}
+.text-green{
+    color: rgb(0, 180, 0);
+}
 
 @mixin header-text($level: 1){
     @if $level == 1{
@@ -20,9 +28,13 @@ $container_bg_color: rgba(0, 0, 0, 0.05);
 
 body{
     box-sizing: border-box;
+    font-family: $font_text;
     height: 100vh;
     margin: 0;
     width: 100vh;
+}
+button{
+    font-family: $font_text;
 }
 
 .header-text{
@@ -98,7 +110,6 @@ body{
         background-color: rgb(255, 255, 255);
         border: 0.3px solid black;
         border-radius: 2px;
-        font-family: $font_text;
         font-size: 16px;
         outline: none;
     }
@@ -126,10 +137,13 @@ body{
     padding: 8px;
     width: 100vw;
 
+    #topbar, #sidebar, #chat{
+        background-color: $container_bg_color;
+        border: 0.5px solid rgba(0, 0, 0, 0.1);
+    }
+
     #topbar{
         align-items: center;
-        background-color: $container_bg_color;
-        box-sizing: border-box;
         box-sizing: border-box;
         display: flex;
         height: 5%;
@@ -143,7 +157,7 @@ body{
             transition: all 0.15s;
         }
         #username:hover{
-            background-color: rgb(209, 209, 209);
+            background-color: $input_hover_bg;
         }
     }
 
@@ -154,38 +168,77 @@ body{
 
         #sidebar{
             align-items: center;
-            background-color: $container_bg_color;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 25px;
+            justify-content: space-between;
             padding: 8px;
             width: 15%;
 
-            .room{
+
+            #rooms-list{
+                align-items: flex-start;
                 box-sizing: border-box;
-                border: 1px solid black;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                height: auto;
+                justify-content: flex-start;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                width: 100%;
+                -ms-overflow-style: none
+            }
+            #rooms-list::-webkit-scrollbar {
+                display: none;
+            }
+
+            .room{
+                align-items: center;
+                background-color: rgb(255, 255, 255);
+                box-sizing: border-box;
+                border: 0.5px solid rgba(0, 0, 0, 0.25);
+                border-radius: 5px;
+                cursor: pointer;
                 display: flex;
                 justify-content: space-between;
-                height: calc(5% - 5px);
-                padding: 5px;
+                flex-basis: 45px;
+                flex-grow: 0;
+                flex-shrink: 0;
+                height: 50px;
+                padding: 8px;
+                transition: all 0.2s;
                 width: 100%;
 
                 span{
                     display: inline-block;
+                    font-family: $font_text;
                     height: auto;
                     width: auto;
                 }
-
-                .room-online{
-                    color: rgb(0, 180, 0);
-                    // color: rgb(240, 0, 0);
-                }
+            }
+            .room:hover{
+                background-color: $input_hover_bg;
+            }
+            
+            #create-room{
+                background-color: rgb(255, 255, 255);
+                border: 0.5px solid rgba(0, 0, 0, 0.25);
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: bold;
+                height: 50px;
+                outline: none;
+                width: 100%;
+            }
+            #create-room:hover{
+                background-color: $input_hover_bg;
+                border: 0.5px solid black;
             }
         }
 
         #chat{
-            background-color: $container_bg_color;
             box-sizing: border-box;
             width: 85%;
         }

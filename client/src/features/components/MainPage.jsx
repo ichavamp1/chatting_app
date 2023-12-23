@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../userSlice";
+import { useParams } from "react-router-dom";
 
 function TopBar(props){
     const { username } = props;
@@ -20,23 +21,21 @@ function TopBar(props){
 function SideBar(){
     return (
         <div id="sidebar">
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room /><Room />
-            <Room />
-            <Room /><Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <Room />
+            <div id="rooms-list">
+                <Room />
+                <Room />
+                <Room />
+                <Room /><Room />
+                <Room />
+                <Room />
+                <Room /><Room />
+                <Room /><Room />
+                <Room /><Room />
+                <Room /><Room />
+                <Room /><Room />
+                
+            </div>
+            <button id="create-room">Create new room</button>
         </div>
     )
 }
@@ -45,26 +44,31 @@ function Room(){
     return (
         <div className="room">
             <span className="room-name">Ballss</span>
-            <span className="room-online">0/10</span>
+            <span className="room-online text-red">0/10</span>
         </div>
     )
 }
 
-function MessagesContainer(){
+function MessagesContainer(props){
+    const { roomId } = props;
+
     return (
-        <div id="chat"></div>
+        <div id="chat">
+            {roomId && "data here"}
+        </div>
     )
 }
 
 export default function MainPage(){
     const userState = useSelector(state => state.user);
+    const { roomId } = useParams();
 
     return (
         <div id="main-page-container">
             <TopBar username={userState.username}/>
             <div id="main-container">
                 <SideBar />
-                <MessagesContainer />
+                <MessagesContainer roomId={roomId}/>
             </div>
         </div>
     )

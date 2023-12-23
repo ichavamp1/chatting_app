@@ -40,7 +40,7 @@ export default function Login(){
     useEffect(() => {
         checkToken(userState.authToken).then(res => {
             dispatch(setUser({userId: res.data.userId, username: res.data.username, authToken: userState.authToken}));
-            nav("/");
+            nav("/r");
         }).catch(error => console.log(error));;
     }, []);
 
@@ -51,7 +51,7 @@ export default function Login(){
         }).then(res => {
             const sessionData = res.data;
             dispatch(setUser({userId: sessionData.userId, username: sessionData.username, authToken: sessionData.accessToken}));
-            nav("/");
+            nav("/r");
         }).catch(error => console.log(error.response.data.message));
     }
 

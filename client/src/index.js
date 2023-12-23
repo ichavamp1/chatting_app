@@ -27,7 +27,8 @@ root.render(
 
             {/*protected routes*/}
             <Route element={<AuthenticatedRoute />}>
-                <Route path="/" element={<MainPage />}/>
+                <Route path="/r" element={<MainPage />}/>
+                <Route path="/r/:roomId" element={<MainPage />}/>
             </Route>
         </Routes>
     </BrowserRouter>
