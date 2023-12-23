@@ -126,8 +126,22 @@ body{
     width: 100vw;
 
     #topbar{
+        align-items: center;
         border: 1px solid black;
+        display: flex;
         height: 5%;
+        justify-content: flex-end;
+        padding: 0 12px;
+
+        #username{
+            border-radius: 5px;
+            display: block;
+            padding: 8px;
+            transition: all 0.15s;
+        }
+        #username:hover{
+            background-color: rgb(209, 209, 209);
+        }
     }
 
     #main-container{

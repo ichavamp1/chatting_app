@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../userSlice";
 import { useNavigate } from "react-router-dom";
 import { baseApi } from "../../api";
+import { checkToken } from "../../utilities/functions";
 
 const TextField = forwardRef(function({label}, ref){
     return (
@@ -37,12 +38,10 @@ export default function Login(){
     const nav = useNavigate();
 
     useEffect(() => {
-        if (userState.authToken == null) return;
-
-        baseApi.post(`/api/auth/is_token_valid`, {authToken: "userState.authToken"}).then(res => {
+        checkToken(userState.authToken).then(res => {
             dispatch(setUser({userId: res.data.userId, username: res.data.username, authToken: userState.authToken}));
             nav("/");
-        }).catch(error => console.log(error));
+        }).catch(error => console.log(error));;
     }, []);
 
     const onLogIn = () => {

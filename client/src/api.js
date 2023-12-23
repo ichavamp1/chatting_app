@@ -5,7 +5,7 @@ const server_url = "http://localhost:3001";
 export const baseApi = axios.create({
     baseURL: server_url,
     headers: {
-        "Content-Length": "application/json"
+        "Content-Type" : "application/json"
     }
 });
 

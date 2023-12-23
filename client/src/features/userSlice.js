@@ -15,9 +15,14 @@ export const userSlice = createSlice({
             state.username = action.payload.username;
             state.authToken = action.payload.authToken;
             localStorage.setItem("authToken", action.payload.authToken);
+        },
+        resetUser: (state) => {
+            state.userId = 0;
+            state.username = "";
+            state.authToken = null;
         }
     }
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, resetUser } = userSlice.actions;
 export default userSlice.reducer;

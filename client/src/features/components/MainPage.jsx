@@ -1,8 +1,19 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { resetUser } from "../userSlice";
 
-function TopBar(){
+function TopBar(props){
+    const { username } = props;
+    const dispatch = useDispatch();
+
+    const logout = () => {
+        dispatch(resetUser());
+    }
+
     return (
-        <div id="topbar"></div>
+        <div id="topbar">
+            <span id="username" onClick={logout}>Helloooo {username} :3333</span>
+        </div>
     )
 }
 
@@ -19,10 +30,11 @@ function MessagesContainer(){
 }
 
 export default function MainPage(){
-    useSelector(state => console.log(state));
+    const userState = useSelector(state => state.user);
+
     return (
         <div id="main-page-container">
-            <TopBar />
+            <TopBar username={userState.username}/>
             <div id="main-container">
                 <SideBar />
                 <MessagesContainer />
