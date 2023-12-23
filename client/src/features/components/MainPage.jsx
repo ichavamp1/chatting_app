@@ -19,13 +19,40 @@ function TopBar(props){
 
 function SideBar(){
     return (
-        <div id="sidebar"></div>
+        <div id="sidebar">
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room /><Room />
+            <Room />
+            <Room /><Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+        </div>
+    )
+}
+
+function Room(){
+    return (
+        <div className="room">
+            <span className="room-name">Ballss</span>
+            <span className="room-online">0/10</span>
+        </div>
     )
 }
 
 function MessagesContainer(){
     return (
-        <div id="messages"></div>
+        <div id="chat"></div>
     )
 }
 
