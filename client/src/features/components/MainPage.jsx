@@ -62,7 +62,8 @@ function MessagesContainer(props){
 export default function MainPage(){
     const userState = useSelector(state => state.user);
     const { roomId } = useParams();
-
+    console.log(userState);
+    
     return (
         <div id="main-page-container">
             <TopBar username={userState.username}/>
