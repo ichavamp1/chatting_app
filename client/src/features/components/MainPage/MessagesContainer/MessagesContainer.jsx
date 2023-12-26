@@ -1,4 +1,7 @@
 import { useParams } from "react-router-dom";
+import { authApi } from "../../../../api";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function Message({ content, sender }){
     return (
@@ -10,24 +13,16 @@ function Message({ content, sender }){
 
 export default function MessagesContainer(){
     const { roomId } = useParams();
+    const userState = useSelector(state => state.user);
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        authApi.get(`/room_messages/${roomId}`).then(res => setMessages(res.data));
+    }, [roomId]);
 
     return (
         <div id="chat">
-            <Message content={"Hi"} sender={"local"}/>
-            <Message content={"Hello worldd"} sender={"foreign"}/>
-            <Message content={"BAALSSSS"} sender={"local"}/>
-            <Message content={"How are you today my fellow friends"} sender={"local"}/>
-            <Message content={"Hello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
-            <Message content={"Hello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worlddHello worldd"} sender={"foreign"}/>
+            {messages.map(message => (message.user_id == userState.userId) ? <Message key={message.id} content={message.content} sender={"local"}/> : <Message key={message.id} content={message.content} sender={"foreign"}/>)}
         </div>
     )
 }

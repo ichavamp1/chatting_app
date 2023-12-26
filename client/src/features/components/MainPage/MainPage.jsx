@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../../userSlice";
-import { useParams } from "react-router-dom";
 
 import LeftSideBar from "./SideBar/LeftSideBar";
 import RightSideBar from "./SideBar/RightSideBar";
@@ -24,6 +23,7 @@ function TopBar(props){
 
 export default function MainPage(){
     const userState = useSelector(state => state.user);
+    const roomState = useSelector(state => state.room);
     
     return (
         <div id="main-page-container">

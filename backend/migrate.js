@@ -18,6 +18,7 @@ const invalid_tokens = `CREATE TABLE invalid_tokens(id int PRIMARY KEY AUTO_INCR
 const users_data = `INSERT INTO users(username, password) VALUES('dlwlrma22', '$2b$10$/QmtfEUB9NXKKuZKliCYROQCKsUnIAiqq1diDW9DkOOd0pwL0gOZa'), ('Museong', '$2b$10$Fu.WcXFy.ES21JA1JKvb/.DFa3zORBQYXekt9zeqcqxJwez86rISa'), ('kingen', '$2b$10$zFbLqQ4yfAryPNzp9HaYzuwJPH1.pHqvkYz4MdidOin1Xi6HcD04a'), ('qazwsxedcrfvdf', '$2b$10$VZIx4pIkVIsXDI9oRn6CiOpfUxWmWMxatkRWatOYS5wYS7VLubPIK'), ('subintnqls06', '$2b$10$gRBXMLRM.Uxg/cNR.0rU3O.ht6x8Ugd6BEkHkm2ohqbSqpn7icfJe');`;
 const rooms_data = `INSERT INTO rooms(name, password, admin_id) VALUES('General chat', NULL, 1), ('Private chat', '$2b$08$1DwcostB0VzFY2X9WaVshuWBIJ8HBWbSeFPpLP81ubFuZK6xJFwYW', 1)`;
 const user_room_table_data = `INSERT INTO user_room(user_id, room_id) VALUES(1, 1), (1, 2), (2, 1), (3, 1), (4, 1), (4, 2), (5, 1);`;
+const messages_data = `INSERT INTO messages(content, user_id, room_id) VALUES('Hello world', 1, 1), ('How is everyone doing?', 2, 1), ('Im okay!', 4, 1), ('Nobody cares tbh', 3, 1), ('Yeah, nobody cares about you. stfu', 1, 1), ('chilll xd', 5, 1);`;
 
 const drop_users = `DROP TABLE IF EXISTS users`;
 const drop_messages = `DROP TABLE IF EXISTS messages`;
@@ -38,5 +39,6 @@ promisifiedQuery(conn, drop_invalid_tokens) //start dropping
     .then(() => promisifiedQuery(conn, users_data)) //insert user data
     .then(() => promisifiedQuery(conn, rooms_data)) //insert rooms data
     .then(() => promisifiedQuery(conn, user_room_table_data)) //insert user room data
+    .then(() => promisifiedQuery(conn, messages_data)) //inserts messages data
     .catch(error => console.log(error))
     .finally(() => conn.end()); //close connection

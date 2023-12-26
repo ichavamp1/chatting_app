@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setRoom } from "../../../roomSlice";
 
 export default function Room(props){
-    const { roomId, name } = props;
+    const { roomId, name, usersCount } = props;
     const params = useParams();
     const nav = useNavigate(); const dispatch = useDispatch();
     const classList = (params.roomId == roomId) ? "room current" : "room";
@@ -16,7 +16,7 @@ export default function Room(props){
     return (
         <div className={classList} onClick={navToRoom}>
             <span className="room-name">{name}</span>
-            <span className="room-online text-red">0/10</span>
+            <span className="room-online text-red">0/{usersCount}</span>
         </div>
     )
 }

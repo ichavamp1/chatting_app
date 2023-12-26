@@ -15,7 +15,7 @@ export default function LeftSideBar(){
     return (
         <div id="left-sidebar" className="sidebar">
             <div id="rooms-list">
-                {rooms.map(room => <Room key={room.id} roomId={room.id} name={room.name}/>)}
+                {rooms.map(room => <Room key={room.id} roomId={room.id} name={room.name} usersCount={room.users_count}/>)}
             </div>
             <div id="room-controller">
                 <button className="room-control">Create room</button>
