@@ -2,7 +2,7 @@
 
 $font_text: 'Martian Mono', monospace;
 $container_bg_color: rgba(0, 0, 0, 0.03);
-$input_hover_bg: rgba(0, 0, 0, 0.2);
+$input_hover_bg: rgba(0, 0, 0, 0.125);
 
 .text-red{
     color: rgb(240, 0, 0);
@@ -218,7 +218,10 @@ button{
                     width: auto;
                 }
             }
-            .room:hover{
+            .current{
+                font-weight: 600;
+            }
+            .room:hover, .current{
                 background-color: $input_hover_bg;
             }
             
