@@ -7,4 +7,8 @@ const conn = mysql.createConnection({
     database: process.env.DB_NAME
 });
 
+if (conn.state === "disconnected") conn.connect(error => {
+    if (error) console.log(error);
+});
+
 module.exports = conn;

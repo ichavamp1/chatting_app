@@ -7,17 +7,13 @@ const AuthRouter = express.Router();
 const userController = require("../db/controllers/userController");
 const invalid_tokensController = require("../db/controllers/invalid_tokenController");
 
-if (conn.state === "disconnected") conn.connect(error => {
-    if (error) throw error;
-})
-
 AuthRouter.post("/register", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).json({message: "Invalid request body"});
 
     if ((await userController.select(conn, "*", null, `WHERE username = '${username}'`)).length > 0) return res.status(500).json({message: "User already exists"});
 
-    bcrypt.hash(password, 10, (error, hash) => {
+    bcrypt.hash(password, 8, (error, hash) => {
         userController.insert(conn, [username, hash]).then(data => res.status(200).json({message: "User successfully registred", userId: data.insertId})).catch(dbError => res.status(500).json({message: [error, dbError]}));
     });
 });
@@ -53,13 +49,13 @@ AuthRouter.post("/is_token_valid", async (req, res) => {
 async function authenticateToken(req, res, next){
     const token = req.headers["authorization"] ?? req.headers["authorization"].split(" ")[1];
 
-    if (token == null) return res.status(400).json({message: "No token provided"});
+    if (token == null) return res.status(400).json({message: "Unauthorized"});
 
     const isTokenInvalid = (await invalid_tokensController.select(conn, "*", null, `WHERE value = '${token}'`))[0] != null;
-    if (isTokenInvalid) return res.status(401).json({message: "Token is expired"});
+    if (isTokenInvalid) return res.status(401).json({message: "Unauthorized"});
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, payload) => {
-        if (error) return res.status(500);
+        if (error) return res.status(500).json({message: "Unauthorized"});
         req.user = payload;
         next();
     });
