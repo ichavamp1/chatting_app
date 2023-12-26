@@ -1,2 +1,5 @@
-app/* linguist-documentation=false
-app/* linguist-vendored
+backend/* linguist-documentation=false
+backend/* linguist-vendored
+
+client/* linguist-documentation=false
+client/* linguist-vendored
