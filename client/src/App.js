@@ -10,7 +10,7 @@ import "./styles/index.scss";
 import Redirect from "./features/components/RedirectComponent";
 import AuthenticatedRoute from './AuthenticatedRoute';
 import Login from './features/components/Login';
-import MainPage from './features/components/MainPage';
+import MainPage from './features/components/MainPage/MainPage';
 
 const persistor = persistStore(store);
 

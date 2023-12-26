@@ -4,6 +4,8 @@ $font_text: 'Martian Mono', monospace;
 $container_bg_color: rgba(0, 0, 0, 0.03);
 $input_hover_bg: rgba(0, 0, 0, 0.125);
 
+$button_border: 0.5px solid rgba(0, 0, 0, 0.25);
+
 .text-red{
     color: rgb(240, 0, 0);
 }
@@ -137,7 +139,7 @@ button{
     padding: 8px;
     width: 100vw;
 
-    #topbar, #sidebar, #chat{
+    #topbar, .sidebar, #chat{
         background-color: $container_bg_color;
         border: 0.5px solid rgba(0, 0, 0, 0.1);
     }
@@ -166,7 +168,7 @@ button{
         gap: 12px;
         height: 95%;
 
-        #sidebar{
+        .sidebar{
             align-items: center;
             box-sizing: border-box;
             display: flex;
@@ -174,7 +176,7 @@ button{
             gap: 25px;
             justify-content: space-between;
             padding: 8px;
-            width: 17%;
+            width: 20%;
 
 
             #rooms-list{
@@ -188,7 +190,7 @@ button{
                 overflow-y: scroll;
                 scrollbar-width: none;
                 width: 100%;
-                -ms-overflow-style: none
+                -ms-overflow-style: none;
             }
             #rooms-list::-webkit-scrollbar {
                 display: none;
@@ -233,7 +235,7 @@ button{
 
             .room-control{
                 background-color: rgb(255, 255, 255);
-                border: 0.5px solid rgba(0, 0, 0, 0.25);
+                border: $button_border;
                 border-radius: 6px;
                 cursor: pointer;
                 font-size: 16px;
@@ -246,7 +248,34 @@ button{
 
         #chat{
             box-sizing: border-box;
-            width: 83%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: scroll;
+            padding: 8px;
+            scrollbar-width: none;
+            width: 60%;
+            -ms-overflow-style: none;
+
+            .message{
+                background-color: white;
+                border: $button_border;
+                border-radius: 5px;
+                box-sizing: border-box;
+                padding: 8px;
+                max-width: 70%;
+            }
+
+            .local{
+                align-self: flex-end;
+                background-color: rgb(240, 240, 240);
+            }
+            .foreign{
+                align-self: flex-start;
+            }
+        }
+        #chat::-webkit-scrollbar {
+            display: none;
         }
     }
 }
