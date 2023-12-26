@@ -3,7 +3,7 @@ function promisifiedQuery(conn, query){
         conn.query(query, (error, result) => {
             if (error){
                 reject(error);
-                raeturn;
+                return;
             }
             resolve(result);
         })
