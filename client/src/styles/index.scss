@@ -174,7 +174,7 @@ button{
             gap: 25px;
             justify-content: space-between;
             padding: 8px;
-            width: 15%;
+            width: 17%;
 
 
             #rooms-list{
@@ -221,29 +221,32 @@ button{
             .current{
                 font-weight: 600;
             }
-            .room:hover, .current{
+            .room:hover, .current, .room-control:hover{
                 background-color: $input_hover_bg;
             }
             
-            #create-room{
+            #room-controller{
+                display: flex;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .room-control{
                 background-color: rgb(255, 255, 255);
                 border: 0.5px solid rgba(0, 0, 0, 0.25);
                 border-radius: 6px;
+                cursor: pointer;
                 font-size: 16px;
                 font-weight: bold;
                 height: 50px;
                 outline: none;
                 width: 100%;
             }
-            #create-room:hover{
-                background-color: $input_hover_bg;
-                border: 0.5px solid black;
-            }
         }
 
         #chat{
             box-sizing: border-box;
-            width: 85%;
+            width: 83%;
         }
     }
 }

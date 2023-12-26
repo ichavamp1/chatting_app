@@ -53,7 +53,10 @@ function SideBar(){
             <div id="rooms-list">
                 {rooms.map(room => <Room key={room.id} roomId={room.id} name={room.name}/>)}
             </div>
-            <button id="create-room">Create new room</button>
+            <div id="room-controller">
+                <button className="room-control">Create room</button>
+                <button className="room-control">Join room</button>
+            </div>
         </div>
     )
 }
