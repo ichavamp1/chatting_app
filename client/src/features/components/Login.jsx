@@ -31,6 +31,8 @@ const PasswordField = forwardRef(function({label}, ref){
     );
 })
 
+//dlwlrma22
+//Wqu6wWYE
 export default function Login(){
     const username = useRef(""); const password = useRef("");
     const userState = useSelector(state => state.user);
@@ -45,7 +47,7 @@ export default function Login(){
     }, []);
 
     const onLogIn = () => {
-        baseApi.post("/api/auth/login", {
+        baseApi.post("/auth/login", {
             username: username.current.value,
             password: password.current.value
         }).then(res => {

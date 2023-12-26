@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../userSlice";
 import { useParams } from "react-router-dom";
+import { authApi } from "../../api";
 
 function TopBar(props){
     const { username } = props;
@@ -9,6 +10,7 @@ function TopBar(props){
 
     const logout = () => {
         dispatch(resetUser());
+        window.location.reload();
     }
 
     return (
@@ -18,33 +20,30 @@ function TopBar(props){
     )
 }
 
-function SideBar(){
+function Room(props){
+    const { name } = props;
     return (
-        <div id="sidebar">
-            <div id="rooms-list">
-                <Room />
-                <Room />
-                <Room />
-                <Room /><Room />
-                <Room />
-                <Room />
-                <Room /><Room />
-                <Room /><Room />
-                <Room /><Room />
-                <Room /><Room />
-                <Room /><Room />
-                
-            </div>
-            <button id="create-room">Create new room</button>
+        <div className="room">
+            <span className="room-name">{name}</span>
+            <span className="room-online text-red">0/10</span>
         </div>
     )
 }
 
-function Room(){
+function SideBar(){
+    const userState = useSelector(state => state.user);
+    const [rooms, setRooms] = useState([]);
+
+    useEffect(() => {
+        authApi.get(`/user_rooms/${userState.userId}`).then(res => setRooms(res.data));
+    }, []);
+
     return (
-        <div className="room">
-            <span className="room-name">Ballss</span>
-            <span className="room-online text-red">0/10</span>
+        <div id="sidebar">
+            <div id="rooms-list">
+                {rooms.map(room => <Room key={room.id} name={room.name}/>)}
+            </div>
+            <button id="create-room">Create new room</button>
         </div>
     )
 }
@@ -54,7 +53,7 @@ function MessagesContainer(props){
 
     return (
         <div id="chat">
-            {roomId && "data here"}
+            {roomId && `data here for room ${roomId}`}
         </div>
     )
 }
