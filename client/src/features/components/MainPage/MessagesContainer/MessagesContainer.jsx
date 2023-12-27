@@ -17,7 +17,8 @@ export default function MessagesContainer(){
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        authApi.get(`/room_messages/${roomId}`).then(res => setMessages(res.data));
+        if (roomId == null) setMessages([]);
+        else authApi.get(`/room_messages/${roomId}`).then(res => setMessages(res.data));
     }, [roomId]);
 
     return (
