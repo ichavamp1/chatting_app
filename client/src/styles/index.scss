@@ -251,12 +251,20 @@ button{
             display: flex;
             flex-direction: column;
             gap: 12px;
-            overflow-y: scroll;
+            justify-content: space-between;
             padding: 8px;
-            scrollbar-width: none;
             width: 60%;
-            -ms-overflow-style: none;
-
+            
+            #messages-container{
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                gap: 12px;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
             .message{
                 background-color: white;
                 border: $button_border;
@@ -264,6 +272,9 @@ button{
                 box-sizing: border-box;
                 padding: 8px;
                 max-width: 70%;
+            }
+            #messages-container::-webkit-scrollbar {
+                display: none;
             }
 
             .local{
@@ -273,9 +284,27 @@ button{
             .foreign{
                 align-self: flex-start;
             }
-        }
-        #chat::-webkit-scrollbar {
-            display: none;
+
+            #chat-input{
+                display: flex;
+                gap: 12px;
+                width: 100%;
+                
+                input{
+                    box-sizing: border-box;
+                    font-family: $font_text;
+                    font-size: 16px;
+                    flex-grow: 1;
+                    height: 40px;
+                    padding: 0 4px;
+                }
+                button{
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                    width: 50px;
+                }
+            }
         }
     }
 }

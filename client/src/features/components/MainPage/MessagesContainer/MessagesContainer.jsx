@@ -1,12 +1,30 @@
 import { useParams } from "react-router-dom";
 import { authApi } from "../../../../api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
+import { AiOutlineSend } from "react-icons/ai";
 
 function Message({ content, sender }){
     return (
         <div className={`message ${sender}`}>
             {content}
+        </div>
+    )
+}
+
+function MessageInput(){
+    const messageRef = useRef();
+
+    const inputKeyDown = (event) => {
+        const content = messageRef.current.value;
+        if (event.key !== "Enter") return;
+        
+        messageRef.current.value = "";
+    }
+    return (
+        <div id="chat-input">
+            <input ref={messageRef} onKeyDown={inputKeyDown}/>
+            <button><AiOutlineSend size={20}/></button>
         </div>
     )
 }
@@ -23,7 +41,10 @@ export default function MessagesContainer(){
 
     return (
         <div id="chat">
-            {messages.map(message => (message.user_id == userState.userId) ? <Message key={message.id} content={message.content} sender={"local"}/> : <Message key={message.id} content={message.content} sender={"foreign"}/>)}
+            <div id="messages-container">
+                {messages.map(message => (message.user_id == userState.userId) ? <Message key={message.id} content={message.content} sender={"local"}/> : <Message key={message.id} content={message.content} sender={"foreign"}/>)}
+            </div>
+            <MessageInput />
         </div>
     )
 }
