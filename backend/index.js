@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express"); const app = express();
 const mysql = require("mysql");
+const socket = require("./socket");
 
 const { AuthRouter } = require("./routes/authRoute");
 const RoomDataRouter = require("./routes/roomDataRoute");

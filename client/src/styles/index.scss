@@ -263,6 +263,7 @@ button{
                 gap: 12px;
                 overflow-y: scroll;
                 scrollbar-width: none;
+                scroll-padding-bottom: 100px;
                 -ms-overflow-style: none;
             }
             .message{
