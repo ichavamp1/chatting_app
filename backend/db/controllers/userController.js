@@ -6,7 +6,7 @@ const userController = {
             baseController.selectQueryTable(conn, "users", rows, count, where).then(data => resolve(data)).catch(error => reject(error));
         });
     },
-    insert: (conn, data, rows=["username", "password"]) => {
+    insert: (conn, data, rows=["username", "password", "pfp"]) => {
         return new Promise((resolve, reject) => {
             baseController.insertQueryTable(conn, "users", rows, data).then(data => resolve(data)).catch(error => reject(error));
         });

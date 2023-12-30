@@ -16,7 +16,7 @@ export default function Register(){
         const data = new FormData(event.target);
         console.log([...data]);
 
-        baseApi.post("/auth/register", data);
+        baseApi.post("/auth/register", data, {headers: {"Content-Type": "multipart/form-data"}});
     }
 
     return (
