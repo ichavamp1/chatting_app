@@ -2,20 +2,37 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const conn = require("../db/connectionConstant");
+const multer = require("multer");
+const fs = require("fs");
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, "pictures/");
+    },
+    filename: function (req, file, cb) {
+        const suffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+        const fileMime = file.mimetype.split("/")[1];
+        cb(null, `${file.originalname}-${suffix}.${fileMime}`);
+    }
+});
+  
+const upload = multer({storage: storage});
 
 const AuthRouter = express.Router();
 const userController = require("../db/controllers/userController");
 const invalid_tokensController = require("../db/controllers/invalid_tokenController");
 
-AuthRouter.post("/register", async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) return res.status(400).json({message: "Invalid request body"});
+AuthRouter.post("/register", upload.single("pfp"), async (req, res) => {
+    const fileLocation = req.file.destination + req.file.filename;
+    res.json(fileLocation);
+    // const { username, password } = req.body;
+    // if (!username || !password) return res.status(400).json({message: "Invalid request body"});
 
-    if ((await userController.select(conn, "*", null, `WHERE username = '${username}'`)).length > 0) return res.status(500).json({message: "User already exists"});
+    // if ((await userController.select(conn, "*", null, `WHERE username = '${username}'`)).length > 0) return res.status(500).json({message: "User already exists"});
 
-    bcrypt.hash(password, 8, (error, hash) => {
-        userController.insert(conn, [username, hash]).then(data => res.status(200).json({message: "User successfully registred", userId: data.insertId})).catch(dbError => res.status(500).json({message: [error, dbError]}));
-    });
+    // bcrypt.hash(password, 8, (error, hash) => {
+    //     userController.insert(conn, [username, hash]).then(data => res.status(200).json({message: "User successfully registred", userId: data.insertId})).catch(dbError => res.status(500).json({message: [error, dbError]}));
+    // });
 });
 
 AuthRouter.post("/login", async (req, res) => {

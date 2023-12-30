@@ -9,7 +9,8 @@ import "./styles/index.scss";
 
 import Redirect from "./features/components/RedirectComponent";
 import AuthenticatedRoute from './AuthenticatedRoute';
-import Login from './features/components/Login';
+import Login from './features/components/Auth/Login';
+import Register from './features/components/Auth/Register';
 import MainPage from './features/components/MainPage/MainPage';
 
 const persistor = persistStore(store);
@@ -24,6 +25,7 @@ export default function App(){
                 <Route path="*" element={<h1>Page not found</h1>}/>
                 
                 <Route path="/login" element={<Login />}/>
+                <Route path="/register" element={<Register />}/>
 
                 {/*protected routes*/}
                 <Route element={<AuthenticatedRoute />}>
