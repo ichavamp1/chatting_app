@@ -13,10 +13,16 @@ const storage = multer.diskStorage({
         const suffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
         const fileMime = file.mimetype.split("/")[1];
         cb(null, `${file.originalname}-${suffix}.${fileMime}`);
-    }
+    },
 });
   
-const upload = multer({storage: storage});
+const upload = multer({
+    storage: storage,
+    fileFilter: function(req, file, cb){
+        const mimeType = file.mimetype.split("/")[0]; //e.g text/plain -> will get text | image/png -> will get image
+        mimeType === "image" ? cb(null, true) : cb(null, false);
+    }
+});
 
 const AuthRouter = express.Router();
 const userController = require("../db/controllers/userController");
@@ -25,12 +31,22 @@ const invalid_tokensController = require("../db/controllers/invalid_tokenControl
 AuthRouter.post("/register", upload.single("pfp"), async (req, res) => {
     const fileName = req.file?.filename ?? "default.png";
     const { username, password } = req.body;
-    if (!username || !password) return res.status(400).json({message: "Invalid request body"});
+    if (!username || !password){
+        fs.unlink(`pictures/${fileName}`, (err) => console.log(err));
+        return res.status(400).json({message: "Invalid request body"});
+    }
+    if (!req.file) return res.status(400).json({message: "Invalid file type"});
 
-    if ((await userController.select(conn, "*", null, `WHERE username = '${username}'`)).length > 0) return res.status(500).json({message: "User already exists"});
+    if ((await userController.select(conn, "*", null, `WHERE username = '${username}'`)).length > 0){
+        fs.unlink(`pictures/${fileName}`, (err) => console.log(err));
+        return res.status(500).json({message: "User already exists"});
+    }
 
     bcrypt.hash(password, 8, (error, hash) => {
-        userController.insert(conn, [username, hash, fileName]).then(data => res.status(200).json({message: "User successfully registred", userId: data.insertId})).catch(dbError => res.status(500).json({message: [error, dbError]}));
+        userController.insert(conn, [username, hash, fileName]).then(data => res.status(200).json({message: "User successfully registred", userId: data.insertId})).catch(dbError => {
+            fs.unlink(`pictures/${fileName}`, (err) => console.log(err));
+            res.status(500).json({message: [error, dbError]})
+        });
     });
 });
 
