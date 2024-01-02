@@ -5,9 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { socket } from "../../../../socket";
 
 function Message({ content, sender }){
+    const rf = useRef(null);
+    console.log(rf);
     return (
         <div className={`message ${sender}`}>
-            {content}
+            <img src="http://localhost:3001/default.png" className="pfp"/>
+            <div className="message-content" ref={rf}>
+                {content}
+            </div>
         </div>
     )
 }
