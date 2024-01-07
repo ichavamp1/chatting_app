@@ -169,6 +169,8 @@ button{
         display: flex;
         gap: 12px;
         height: 95%;
+        max-height: 95%;
+        min-height: 95%;
 
         .sidebar{
             align-items: center;
