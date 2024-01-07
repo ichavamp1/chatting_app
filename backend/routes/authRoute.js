@@ -63,7 +63,7 @@ AuthRouter.post("/login", async (req, res) => {
 
     const accessToken = jwt.sign({userId: targetUser.id, username: targetUser.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "6h"});
 
-    return res.status(200).json({accessToken: accessToken, userId: targetUser.id, username: targetUser.username});
+    return res.status(200).json({accessToken: accessToken, userId: targetUser.id, username: targetUser.username, pfp: targetUser.pfp});
 });
 
 AuthRouter.post("/is_token_valid", async (req, res) => {

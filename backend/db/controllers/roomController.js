@@ -13,12 +13,12 @@ const roomController = {
     },
     getRoomMessages: (conn, roomId) => {
         return new Promise((resolve, reject) => {
-            baseController.selectQueryTable(conn, "messages", "*", null, `WHERE room_id = (SELECT id FROM rooms WHERE id = ${roomId})`).then(data => resolve(data)).catch(error => reject(error));
+            baseController.selectQueryTable(conn, "messages", "*, (SELECT username FROM users WHERE id = user_id) as sent_by, (SELECT pfp FROM users WHERE id = user_id) as pfp", null, `WHERE room_id = (SELECT id FROM rooms WHERE id = ${roomId})`).then(data => resolve(data)).catch(error => reject(error));
         });
     },
     getRoomMembers: (conn, roomId) => {
         return new Promise((resolve, reject) => {
-            baseController.selectQueryTable(conn, "users", "id, username", null, `WHERE id IN (SELECT user_id FROM user_room WHERE room_id = ${roomId})`).then(data => resolve(data)).catch(error => reject(error));
+            baseController.selectQueryTable(conn, "users", "id, username, pfp", null, `WHERE id IN (SELECT user_id FROM user_room WHERE room_id = ${roomId})`).then(data => resolve(data)).catch(error => reject(error));
         });
     }
 }

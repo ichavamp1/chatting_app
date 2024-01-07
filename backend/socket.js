@@ -16,7 +16,7 @@ const io = require("socket.io")(3002, {
 io.on("connection", socket => {
     socket.on("send-message", data => {
         messageController.insert(conn, [data.content, data.userId, data.roomId])
-            .then(res => socket.emit("render-message", {...data, messageId: res.insertId}))
-            .catch(() => socket.emit("unrender-message", data));
+            .then(res => socket.emit("RENDER_MESSAGE", {...data, messageId: res.insertId}))
+            .catch(() => socket.emit("UNRENDER_MESSAGE", data));
     })
 });

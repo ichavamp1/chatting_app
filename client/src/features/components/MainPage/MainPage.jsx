@@ -24,14 +24,9 @@ function TopBar(props){
 }
 
 export default function MainPage(){
-    const [images, setImages] = useState([]);
     const userState = useSelector(state => state.user);
     const roomState = useSelector(state => state.room);
 
-    useEffect(() => {
-        baseApi.get("/users").then(res => setImages(res.data.map(user => user.pfp)));
-    }, []);
-    
     return (
         <div id="main-page-container">
             <TopBar username={userState.username}/>

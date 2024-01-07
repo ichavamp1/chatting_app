@@ -12,13 +12,9 @@ const userController = require("./db/controllers/userController");
 
 app.use(require("cors")());
 app.use(express.json());
-app.use(express.static("pictures"));
+app.use("/pictures", express.static("pictures"));
 app.use("/api/auth", AuthRouter);
 app.use("/api", RoomDataRouter);
 app.use("/api", UserDataRouter);
-
-app.get("/", (req, res) => {
-    userController.query(conn).then(data => res.json(data));
-});
 
 app.listen(3001, () => console.log("Server is on"));

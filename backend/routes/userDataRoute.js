@@ -9,6 +9,6 @@ const roomController = require("../db/controllers/roomController");
 UserDataRouter.get("/users", async (req, res) => {
     const data = await userController.select(conn, "*", null, null);
     res.json(data);
-})
+});
 
 module.exports = UserDataRouter;

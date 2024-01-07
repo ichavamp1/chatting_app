@@ -9,7 +9,7 @@ export default function Room(props){
     const classList = (params.roomId == roomId) ? "room current" : "room";
 
     const navToRoom = () => {
-        dispatch(setRoom({roomId: roomId, name: name}))
+        dispatch(setRoom({roomId: roomId, name: name, members: []}));
         nav(`/r/${roomId}`);
     }
 

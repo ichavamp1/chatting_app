@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     roomId: 0,
-    name: ""
+    name: "",
+    members: []
 };
 
 export const roomSlice = createSlice({
@@ -12,6 +13,7 @@ export const roomSlice = createSlice({
         setRoom: (state, action) => {
             state.roomId = action.payload.roomId;
             state.name = action.payload.name;
+            state.members = [...action.payload.members];
         }
     }
 });
