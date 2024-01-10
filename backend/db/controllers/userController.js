@@ -15,6 +15,11 @@ const userController = {
         return new Promise((resolve, reject) => {
             baseController.selectQueryTable(conn, "rooms", "*, (SELECT COUNT(*) FROM `users` WHERE id IN (SELECT user_id FROM user_room WHERE room_id = rooms.id)) as users_count", null, `WHERE id IN (SELECT room_id FROM user_room WHERE user_id = ${userId})`).then(data => resolve(data)).catch(error => reject(error));
         });
+    },
+    isInRoom: (conn, userId, roomId) => {
+        return new Promise((resolve, reject) => {
+            baseController.selectQueryTable(conn, "user_room", "COUNT(*) AS result", null, `WHERE user_id = ${userId} AND room_id = ${roomId}`).then(data => resolve((data[0].result >= 1))).catch(err => resolve(err));
+        });
     }
 }
 

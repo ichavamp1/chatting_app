@@ -73,7 +73,6 @@ export default function MessagesContainer(){
         });
 
         socket.off("RENDER_MESSAGE").on("RENDER_MESSAGE", data => {
-            console.log(data);
             setScrollBehavior("smooth");
             setMessagesList(prevState => [...prevState, <Message key={data.messageId} content={data.content} sender={data.userId == userState.userId ? "local" : "foreign"} pfp={userState.pfp}/>])
         });

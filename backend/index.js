@@ -17,4 +17,9 @@ app.use("/api/auth", AuthRouter);
 app.use("/api", RoomDataRouter);
 app.use("/api", UserDataRouter);
 
+app.get("/controllers/test", async (req, res) => {
+    const data = await userController.isInRoom(conn, 41, 1);
+    res.json(data);
+});
+
 app.listen(3001, () => console.log("Server is on"));
