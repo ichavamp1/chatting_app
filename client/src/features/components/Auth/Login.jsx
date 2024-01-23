@@ -26,7 +26,7 @@ export default function Login(){
     const onLogIn = event => {
         event.preventDefault();
         const formData = new FormData(event.target);
-        console.log([...formData]);
+
         baseApi.post("/auth/login", formData)
             .then(res => {
                 const sessionData = res.data;

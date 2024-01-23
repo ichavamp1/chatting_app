@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { authApi } from "../../../../api";
 
 import Room from "./Room";
-import CreateRoom from "../../popups/CreateRoom";
+import Modal from "../../Modal";
+import TextField from "../../TextField";
 
 export default function LeftSideBar(){
     const userState = useSelector(state => state.user);
@@ -14,6 +15,19 @@ export default function LeftSideBar(){
         authApi.get(`/user_rooms/${userState.userId}`).then(res => setRooms(res.data));
     }, []);
 
+    const createRoomEvent = event => {
+        event.preventDefault();
+
+        const data = new FormData(event.target);
+        data.append("adminId", userState.userId);
+        
+        authApi.post("/room/create", data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => setCreateRoomModal(false));
+    }
+
     return (
         <div id="left-sidebar" className="sidebar">
             <div id="rooms-list">
@@ -23,7 +37,17 @@ export default function LeftSideBar(){
                 <button className="room-control" onClick={() => setCreateRoomModal(true)}>Create room</button>
                 <button className="room-control">Join room</button>
             </div>
-            <CreateRoom open={createRoomModal} setOpen={setCreateRoomModal}/>
+            <Modal open={createRoomModal}>
+                <form id="create-room" onSubmit={createRoomEvent}>
+                    <button id="close" onClick={() => setCreateRoomModal(false)}>X</button>
+                    <TextField id="room-name" name="name" label="Name"/>
+                    <TextField id="room-password" name="password" label="Password (optional)"/>
+                    <div id="actions">
+                        <input onClick={() => setCreateRoomModal(false)} type="submit" value="Cancel"/>
+                        <input onClick={event => event.target.actionType = "create"} type="submit" value="Create Room"/>
+                    </div>
+                </form>
+            </Modal>
         </div>
     )
 }

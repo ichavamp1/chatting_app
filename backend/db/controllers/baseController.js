@@ -10,7 +10,8 @@ const baseController = {
     insertQueryTable: (conn, tableName, rows, data) => {
         return new Promise((resolve, reject) => {
             conn.query(`INSERT INTO ${tableName}(${rows.join(",")}) VALUES(${data.map(item => {
-                if (typeof item == "string") return `"${item}"`;
+                if (typeof item == "string" && item.length > 0) return `"${item}"`;
+                if (item == null || item == "") return "null";
                 return item;
             })})`, (error, result) => {
                 if (error) reject(error);

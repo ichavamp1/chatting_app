@@ -12,6 +12,7 @@ export const baseApi = axios.create({
 export const authApi = axios.create({
     baseURL: server_url,
     headers: {
-        Authorization: localStorage.getItem("authToken")
+        "Authorization": `Bearer ${localStorage.getItem("authToken")}`,
+        "Content-Type" : "application/json"
     }
 });

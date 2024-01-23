@@ -80,7 +80,7 @@ AuthRouter.post("/is_token_valid", async (req, res) => {
 });
 
 async function authenticateToken(req, res, next){
-    const token = req.headers["authorization"] ?? req.headers["authorization"].split(" ")[1];
+    const token = (req.headers["authorization"] == null) ? null : req.headers["authorization"].split(" ")[1];
 
     if (token == null) return res.status(400).json({message: "Unauthorized"});
 

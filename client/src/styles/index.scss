@@ -40,6 +40,9 @@ body{
 button{
     font-family: $font_text;
 }
+input{
+    font-family: $font_text;
+}
 
 .header-text{
     @include header_text(1);
@@ -54,6 +57,19 @@ button{
     width: 100vw;
 }
 
+.text-field{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    input{
+        font-family: $font_text;
+        padding: 0 4px;
+    }
+    label{
+        @include header-text(4);
+    }
+}
 
 #login-page-container{
     align-items: center;
@@ -87,7 +103,7 @@ button{
         outline: none;
     }
 
-    .text-field, .password-field{
+    .password-field{
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -327,7 +343,7 @@ button{
             }
         }
 
-        #create-room{
+        .modal{
             align-items: center;
             background-color: rgba(0, 0, 0, 0.7);
             display: flex;
@@ -337,29 +353,46 @@ button{
             position: absolute;
             top: 0;
             width: 100vw;
+        }
 
-            #container{
-                align-items: center;
-                background-color: white;
-                box-sizing: border-box;
+        #create-room{
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 250px;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            width: 450px;
+
+            #close{
+                background-color: inherit;
+                border: none;
+                font-size: 18px;
+                font-family: $font_text;
+                cursor: pointer;
+                position: absolute;
+                right: 5px;
+                top: 5px;
+            }
+
+            #actions{
+                bottom: 15px;
                 display: flex;
-                flex-direction: column;
                 gap: 12px;
-                height: 300px;
-                justify-content: center;
-                padding: 20px;
-                position: relative;
-                width: 400px;
+                position: absolute;
+                right: 15px;
+            }
 
-                #close{
-                    background-color: inherit;
-                    border: none;
-                    font-size: 18px;
-                    font-family: $font_text;
-                    cursor: pointer;
-                    position: absolute;
-                    right: 5px;
-                    top: 5px;
+            .text-field{
+                width: 100%;
+                input{
+                    box-sizing: border-box;
+                    height: 25px;
                 }
             }
         }
