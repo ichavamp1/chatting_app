@@ -355,6 +355,17 @@ input{
             width: 100vw;
         }
 
+        .close-modal{
+            background-color: inherit;
+            border: none;
+            font-size: 18px;
+            font-family: $font_text;
+            cursor: pointer;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+
         #create-room{
             align-items: center;
             background-color: white;
@@ -369,17 +380,6 @@ input{
             position: relative;
             width: 450px;
 
-            #close{
-                background-color: inherit;
-                border: none;
-                font-size: 18px;
-                font-family: $font_text;
-                cursor: pointer;
-                position: absolute;
-                right: 5px;
-                top: 5px;
-            }
-
             #actions{
                 bottom: 15px;
                 display: flex;
@@ -393,6 +393,41 @@ input{
                 input{
                     box-sizing: border-box;
                     height: 25px;
+                }
+            }
+        }
+
+        #join-room{
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 500px;
+            padding: 40px 20px;
+            position: relative;
+            width: 400px;
+            overflow: scroll;
+
+            .join-room-item{
+                align-items: center;
+                border: 1px solid black;
+                border-radius: 8px;
+                box-sizing: border-box;
+                cursor: pointer;
+                display: flex;
+                flex-grow: 0;
+                flex-shrink: 0;
+                height: 40px;
+                justify-content: space-between;
+                padding: 0 8px;
+                width: 100%;
+                
+                .join-room-name, .users-count{
+                    align-items: center;
+                    display: flex;
                 }
             }
         }

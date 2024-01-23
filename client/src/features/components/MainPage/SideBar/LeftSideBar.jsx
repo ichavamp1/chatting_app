@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { authApi } from "../../../../api";
+import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineUnlock } from "react-icons/ai";
+import { AiOutlineLock } from "react-icons/ai";
 
 import Room from "./Room";
 import Modal from "../../Modal";
@@ -10,6 +13,7 @@ export default function LeftSideBar(){
     const userState = useSelector(state => state.user);
     const [rooms, setRooms] = useState([]);
     const [createRoomModal, setCreateRoomModal] = useState(false);
+    const [joinRoomModal, setJoinRoomModal] = useState(false);
 
     useEffect(() => {
         authApi.get(`/user_rooms/${userState.userId}`).then(res => setRooms(res.data));
@@ -35,11 +39,11 @@ export default function LeftSideBar(){
             </div>
             <div id="room-controller">
                 <button className="room-control" onClick={() => setCreateRoomModal(true)}>Create room</button>
-                <button className="room-control">Join room</button>
+                <button className="room-control" onClick={() => setJoinRoomModal(true)}>Join room</button>
             </div>
             <Modal open={createRoomModal}>
                 <form id="create-room" onSubmit={createRoomEvent}>
-                    <button id="close" onClick={() => setCreateRoomModal(false)}>X</button>
+                    <button className="close-modal" onClick={() => setCreateRoomModal(false)}>X</button>
                     <TextField id="room-name" name="name" label="Name"/>
                     <TextField id="room-password" name="password" label="Password (optional)"/>
                     <div id="actions">
@@ -47,6 +51,94 @@ export default function LeftSideBar(){
                         <input onClick={event => event.target.actionType = "create"} type="submit" value="Create Room"/>
                     </div>
                 </form>
+            </Modal>
+            <Modal open={joinRoomModal}>
+                <div id="join-room">
+                    <button className="close-modal" onClick={() => setCreateRoomModal(false)}>X</button>
+                    <div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div>
+                    <div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div>
+                    <div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div>
+                    <div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div>
+                    <div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div>
+                    <div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div><div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div><div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div><div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div><div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div><div className="join-room-item">
+                        <div className="join-room-name">
+                            <AiOutlineUnlock/> roomname
+                        </div>
+                        <div className="users-count">
+                            <AiOutlineUser/> 20
+                        </div>
+                    </div>
+                </div>
             </Modal>
         </div>
     )
