@@ -1,16 +1,33 @@
 import { useParams } from "react-router-dom";
 import { authApi } from "../../../../api";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext, createContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { socket } from "../../../../socket";
 import { setRoom } from "../../../roomSlice";
 
 function Message({ content, sender, pfp }){
+    const [contextMenu, setContextMenu] = useState({open: false, x: 0, y: 0});
+    const handleMessageContextMenu = event => {
+        event.preventDefault();
+        const { clientX, clientY } = event;
+        setContextMenu({open: true, x: clientX, y: clientY});
+        // setTimeout(() => setContextMenu(false), 1000);
+        //TODO: add event listener to close context menu if clicked outside it
+        console.log(event);
+    }
     return (
         <div className={`message ${sender}`}>
             <img src={`http://localhost:3001/pictures/${pfp}`} className="pfp"/>
-            <div className="message-content">
+            <div className="message-content" onContextMenu={handleMessageContextMenu}>
                 {content}
+            </div>
+            <div className="message-context-container" style={(() => {
+                let display = "block";
+                if (!contextMenu.open) display = "none";
+
+                return {display, top: contextMenu.y, left: contextMenu.x}
+            })()}>
+                <button>Unsend</button>
             </div>
         </div>
     )
