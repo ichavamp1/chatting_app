@@ -56,6 +56,7 @@ AuthRouter.post("/login", async (req, res) => {
     if (!username || !password) return res.status(400).json({message: "Invalid request body"});
 
     const targetUser = (await userController.select(conn, "*", null, `WHERE username = '${username}'`))[0];
+    const userRooms = (await userController.getUserRooms(conn, targetUser.id, ["id"]));
 
     if (targetUser == null) return res.status(404).json({message: "User not found"});
 
@@ -63,7 +64,7 @@ AuthRouter.post("/login", async (req, res) => {
 
     const accessToken = jwt.sign({userId: targetUser.id, username: targetUser.username}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "6h"});
 
-    return res.status(200).json({accessToken: accessToken, userId: targetUser.id, username: targetUser.username, pfp: targetUser.pfp});
+    return res.status(200).json({accessToken: accessToken, userId: targetUser.id, username: targetUser.username, pfp: targetUser.pfp, roomsIn: userRooms.map(item => item.id)});
 });
 
 AuthRouter.post("/is_token_valid", async (req, res) => {

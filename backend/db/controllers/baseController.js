@@ -1,15 +1,15 @@
 const baseController = {
-    selectQueryTable: (conn, tableName, rows="*", count=null, where=null) => {
+    selectQueryTable: (conn, tableName, colls="*", count=null, where=null) => {
         return new Promise((resolve, reject) => {
-            conn.query(`SELECT ${rows} FROM ${tableName} ${where ?? ""} ${count == null ? "" : `LIMIT ${count}`}`, (error, result) => {
+            conn.query(`SELECT ${colls} FROM ${tableName} ${where ?? ""} ${count == null ? "" : `LIMIT ${count}`}`, (error, result) => {
                 if (error) reject(error);
                 else resolve(result);
             });
         })
     },
-    insertQueryTable: (conn, tableName, rows, data) => {
+    insertQueryTable: (conn, tableName, colls, data) => {
         return new Promise((resolve, reject) => {
-            conn.query(`INSERT INTO ${tableName}(${rows.join(",")}) VALUES(${data.map(item => {
+            conn.query(`INSERT INTO ${tableName}(${colls.join(",")}) VALUES(${data.map(item => {
                 if (typeof item == "string" && item.length > 0) return `"${item}"`;
                 if (item == null || item == "") return "null";
                 return item;

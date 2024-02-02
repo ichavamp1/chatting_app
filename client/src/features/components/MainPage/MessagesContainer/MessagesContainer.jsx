@@ -3,22 +3,22 @@ import { authApi } from "../../../../api";
 import { useEffect, useState, useRef, useContext, createContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { socket } from "../../../../socket";
-import { setRoom } from "../../../roomSlice";
 
 function Message({ content, sender, pfp }){
     const [contextMenu, setContextMenu] = useState({open: false, x: 0, y: 0});
-    const handleMessageContextMenu = event => {
-        event.preventDefault();
-        const { clientX, clientY } = event;
-        setContextMenu({open: true, x: clientX, y: clientY});
-        // setTimeout(() => setContextMenu(false), 1000);
-        //TODO: add event listener to close context menu if clicked outside it
-        console.log(event);
-    }
+    // const handleMessageContextMenu = event => {
+    //     event.preventDefault();
+    //     const { clientX, clientY } = event;
+    //     setContextMenu({open: true, x: clientX, y: clientY});
+    //     // setTimeout(() => setContextMenu(false), 1000);
+    //     //TODO: add event listener to close context menu if clicked outside it
+    //     console.log(event);
+    // }
+
     return (
         <div className={`message ${sender}`}>
             <img src={`http://localhost:3001/pictures/${pfp}`} className="pfp"/>
-            <div className="message-content" onContextMenu={handleMessageContextMenu}>
+            <div className="message-content">
                 {content}
             </div>
             <div className="message-context-container" style={(() => {
@@ -67,26 +67,10 @@ export default function MessagesContainer(){
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (roomId == null) return;
-        authApi.get(`/room/users/${roomId}`).then(res => {
-            const users = res.data;
-        
-            dispatch(setRoom({roomId: roomId, name: roomState.name, members: [...users]}));
-        });
-    }, []);
-
-    useEffect(() => {
         if (roomId == null) setMessagesList([]);
         else authApi.get(`/room_messages/${roomId}`).then(res => {
             const temp = res.data.map((item, index) => (item.user_id == userState.userId) ? <Message key={item.id} content={item.content} sender={"local"} pfp={item.pfp}/> : <Message key={item.id} content={item.content} sender={"foreign"} pfp={item.pfp}/>);
             setMessagesList(temp);
-        });
-
-        if (roomId == null) dispatch(setRoom({roomId: 0, name: "", members: []}))
-        else authApi.get(`/room/users/${roomId}`).then(res => {
-            const users = res.data;
-        
-            dispatch(setRoom({roomId: roomId, name: roomState.name, members: [...users]}));
         });
 
         socket.off("RENDER_MESSAGE").on("RENDER_MESSAGE", data => {

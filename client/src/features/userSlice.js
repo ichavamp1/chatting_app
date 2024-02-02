@@ -4,6 +4,7 @@ const initialState = {
     userId: 0,
     username: "",
     pfp: "default.png",
+    roomsIn: [],
     authToken: null
 };
 
@@ -15,6 +16,7 @@ export const userSlice = createSlice({
             state.userId = action.payload.userId;
             state.username = action.payload.username;
             state.pfp = action.payload.pfp;
+            state.roomsIn = [...action.payload.roomsIn];
             state.authToken = action.payload.authToken;
             localStorage.setItem("authToken", action.payload.authToken);
         },
@@ -22,6 +24,7 @@ export const userSlice = createSlice({
             state.userId = 0;
             state.username = "";
             state.pfp = "default.png";
+            state.roomsIn = [];
             state.authToken = null;
         }
     }

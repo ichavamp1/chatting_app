@@ -7,6 +7,25 @@ const { authenticateToken } = require("./authRoute");
 const userController = require("../db/controllers/userController");
 const roomController = require("../db/controllers/roomController");
 
+RoomDataRouter.get("/room/:roomId", async (req, res) => {
+    const { roomId } = req.params;
+
+    if (roomId == null) return res.status(404).json({message: "Room not found"});
+    const data = (await roomController.select(conn, "*", null, `WHERE id = ${roomId}`))[0];
+    const members = await roomController.getRoomMembers(conn, roomId);
+    data.members = members;
+
+    res.status(202).json(data);
+});
+
+RoomDataRouter.get("/room/is_a_member/:roomId/:userId", async (req, res) => {
+    const { roomId, userId } = req.params;
+
+    const data = await roomController.isAMember(conn, roomId, userId);
+
+    res.status(202).json(data);
+});
+
 RoomDataRouter.get("/user_rooms/:userId", authenticateToken, async (req, res) => {
     const { userId } = req.params;
 

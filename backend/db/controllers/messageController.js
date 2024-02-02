@@ -1,14 +1,14 @@
 const baseController = require("./baseController");
 
 const messageController = {
-    select: (conn, rows="*", count=null, where=null) => {
+    select: (conn, colls="*", count=null, where=null) => {
         return new Promise((resolve, reject) => {
-            baseController.selectQueryTable(conn, "messages", rows, count, where).then(data => resolve(data)).catch(error => reject(error));
+            baseController.selectQueryTable(conn, "messages", colls, count, where).then(data => resolve(data)).catch(error => reject(error));
         });
     },
-    insert: (conn, data, rows=["content", "user_id", "room_id"]) => {
+    insert: (conn, data, colls=["content", "user_id", "room_id"]) => {
         return new Promise((resolve, reject) => {
-            baseController.insertQueryTable(conn, "messages", rows, data).then(data => resolve(data)).catch(error => reject(error));
+            baseController.insertQueryTable(conn, "messages", colls, data).then(data => resolve(data)).catch(error => reject(error));
         })
     }
 }

@@ -1,14 +1,14 @@
 const baseController = require("./baseController");
 
 const roomController = {
-    select: (conn, rows="*", count=null, where=null) => {
+    select: (conn, colls="*", count=null, where=null) => {
         return new Promise((resolve, reject) => {
-            baseController.selectQueryTable(conn, "rooms", rows, count, where).then(data => resolve(data)).catch(error => reject(error));
+            baseController.selectQueryTable(conn, "rooms", colls, count, where).then(data => resolve(data)).catch(error => reject(error));
         });
     },
-    insert: (conn, data, rows=["name", "password", "admin_id"]) => {
+    insert: (conn, data, colls=["name", "password", "admin_id"]) => {
         return new Promise((resolve, reject) => {
-            baseController.insertQueryTable(conn, "rooms", rows, data).then(data => resolve(data)).catch(error => reject(error));
+            baseController.insertQueryTable(conn, "rooms", colls, data).then(data => resolve(data)).catch(error => reject(error));
         });
     },
     getRoomMessages: (conn, roomId) => {
@@ -19,6 +19,11 @@ const roomController = {
     getRoomMembers: (conn, roomId) => {
         return new Promise((resolve, reject) => {
             baseController.selectQueryTable(conn, "users", "id, username, pfp", null, `WHERE id IN (SELECT user_id FROM user_room WHERE room_id = ${roomId})`).then(data => resolve(data)).catch(error => reject(error));
+        });
+    },
+    isAMember: (conn, roomId, userId) => {
+        return new Promise((resolve, reject) => {
+            baseController.selectQueryTable(conn, "user_room", "COUNT(*) AS result", null, `WHERE user_id = ${userId} AND room_id = ${roomId}`).then(data => resolve((data[0].result >= 1))).catch(err => resolve(err));
         });
     }
 }

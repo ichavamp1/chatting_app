@@ -18,7 +18,8 @@ export default function Login(){
 
     useEffect(() => {
         checkToken(userState.authToken).then(res => {
-            dispatch(setUser({userId: res.data.userId, username: res.data.username, pfp: res.data.pfp, authToken: userState.authToken}));
+            console.log(res);
+            dispatch(setUser({userId: res.data.userId, username: res.data.username, pfp: res.data.pfp, authToken: userState.authToken, roomsIn: res.data.roomsIn}));
             nav("/r");
         }).catch(error => console.log(error));;
     }, []);
@@ -29,10 +30,10 @@ export default function Login(){
 
         baseApi.post("/auth/login", formData)
             .then(res => {
-                const sessionData = res.data;
-                dispatch(setUser({userId: sessionData.userId, username: sessionData.username, pfp: res.data.pfp, authToken: sessionData.accessToken}));
+            const sessionData = res.data;
+                dispatch(setUser({userId: sessionData.userId, username: sessionData.username, pfp: res.data.pfp, authToken: sessionData.accessToken, roomsIn: sessionData.roomsIn}));
                 nav("/r");
-            }).catch(error => console.log(error.response.data.message));
+            }).catch(error => console.log(error));
     }
 
     return (
