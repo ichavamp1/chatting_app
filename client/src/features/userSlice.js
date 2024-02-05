@@ -26,9 +26,12 @@ export const userSlice = createSlice({
             state.pfp = "default.png";
             state.roomsIn = [];
             state.authToken = null;
+        },
+        addRoom: (state, action) => {
+            state.roomsIn.push(action.payload);
         }
     }
 });
 
-export const { setUser, resetUser } = userSlice.actions;
+export const { setUser, resetUser, addRoom } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { resetUser } from "../../userSlice";
+import { resetUser, addRoom } from "../../userSlice";
 
 import LeftSideBar from "./SideBar/LeftSideBar";
 import RightSideBar from "./SideBar/RightSideBar";
@@ -33,13 +33,22 @@ export default function MainPage(){
     const roomId = isNaN(parseInt(params.roomId)) ? 0 : parseInt(params.roomId);
 
     useEffect(() => {
-        console.log(userState.roomsIn.includes(roomId))
-        console.log(userState.roomsIn, roomId)
-
+        console.log(userState);
         if (roomId == 0) return;
-        authApi.get(`/room/${roomId ?? 0}`).then(res => {
-            dispatch(setRoom({roomId: res.data.id, name: res.data.name, members: res.data.members}))
-        });
+        const isInRoom = userState.roomsIn.includes(roomId);
+        if (isInRoom){
+            authApi.get(`/room/${roomId ?? 0}`).then(res => {
+                dispatch(setRoom({roomId: res.data.id, name: res.data.name, members: res.data.members}));
+            }).catch(err => console.log(err.response.data.message));
+        }else{
+            authApi.post(`/join_room/${roomId}`, {userId: userState.userId}).then(res => {
+                dispatch(addRoom(roomId));
+                // dispatch(setRoom({roomId: res.data.id, name: res.data.name, members: res.data.members}));
+                console.log(res.data);
+                //add to check if the room requries a apssword
+            }).catch(err => console.log(err.response.data.message));
+        }
+
     }, [params.roomId]);
 
     return (

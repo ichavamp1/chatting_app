@@ -23,7 +23,15 @@ const roomController = {
     },
     isAMember: (conn, roomId, userId) => {
         return new Promise((resolve, reject) => {
-            baseController.selectQueryTable(conn, "user_room", "COUNT(*) AS result", null, `WHERE user_id = ${userId} AND room_id = ${roomId}`).then(data => resolve((data[0].result >= 1))).catch(err => resolve(err));
+            baseController.selectQueryTable(conn, "user_room", "COUNT(*) AS result", null, `WHERE user_id = ${userId} AND room_id = ${roomId}`).then(data => resolve((data[0].result >= 1))).catch(err => reject(err));
+        });
+    },
+    exists: (conn, roomId) => {
+        return new Promise((resolve, reject) => {
+            baseController.selectQueryTable(conn, "rooms", "*", null, `WHERE id = ${roomId}`).then(data => {
+                if (data[0]) resolve({response: true, data: {...data[0]}});
+                else resolve({response: false})
+            }).catch(error => reject(error))
         });
     }
 }

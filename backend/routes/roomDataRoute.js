@@ -12,6 +12,7 @@ RoomDataRouter.get("/room/:roomId", async (req, res) => {
 
     if (roomId == null) return res.status(404).json({message: "Room not found"});
     const data = (await roomController.select(conn, "*", null, `WHERE id = ${roomId}`))[0];
+    if (!data) return res.status(404).json({message: "Room not found"});
     const members = await roomController.getRoomMembers(conn, roomId);
     data.members = members;
 
